@@ -12,17 +12,15 @@ WORKDIR /root/
 # Turn down the verbosity to default level.
 ENV NPM_CONFIG_LOGLEVEL warn
 
-RUN mkdir -p /home/app/function
+RUN mkdir -p /home/app
 
 # Wrapper/boot-strapper
 WORKDIR /home/app
-COPY package.json ./
 
-# This ordering means the npm installation is cached for the outer function handler.
-RUN npm i
+# Install the Wireline CLI
+RUN npm i -g @wirelineio/cli
 
 # Copy outer function handler
-COPY index.js ./
 COPY bootstrap.sh ./
 
 # chmod for tmp is for a buildkit issue (@alexellis)
@@ -32,7 +30,7 @@ RUN chown app:app -R /home/app \
 USER app
 
 ENV cgi_headers="true"
-ENV fprocess="node index.js"
+ENV fprocess="wire run"
 ENV mode="http"
 ENV upstream_url="http://127.0.0.1:3000"
 

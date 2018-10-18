@@ -17,12 +17,8 @@ if [ "$CODE_HASH" != "$WRL_CODE_CONTENT_HASH" ]; then
   exit 2
 fi
 
-if [ ! -d "/home/app/function" ]; then
-  mkdir -p "/home/app/function"
-fi
-
 echo "Unzipping code..."
-unzip code.zip -d /home/app/function
+unzip code.zip -d /home/app
 if [ $? -ne 0 ]; then
   echo "Error unzipping package."
   exit 3
