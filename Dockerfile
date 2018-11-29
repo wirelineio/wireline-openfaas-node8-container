@@ -1,6 +1,6 @@
-FROM node:8.10-alpine
+FROM node:10.13-alpine
 
-RUN apk --no-cache add curl
+RUN apk --no-cache add curl file openssl coreutils
 
 RUN addgroup -S app && adduser -S -g app app
 
