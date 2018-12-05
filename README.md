@@ -7,6 +7,14 @@ docker build -t localhost:5000/nodejs .
 docker push localhost:5000/nodejs
 ```
 
+# For GKE:
+
+```
+docker build --no-cache -t gcr.io/wireline-darkstar/nodejs .
+docker push gcr.io/wireline-darkstar/nodejs
+```
+
+
 # TODO
 
 * We need to pick up more info from `service.yml` and `wireline.yml` to setup the routes and parameters.

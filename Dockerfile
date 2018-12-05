@@ -1,6 +1,5 @@
 FROM node:10.13-alpine
 
-RUN apk --no-cache add curl file openssl coreutils
 
 RUN addgroup -S app && adduser -S -g app app
 
@@ -17,15 +16,22 @@ RUN mkdir -p /home/app
 # Wrapper/boot-strapper
 WORKDIR /home/app
 
-# Install the Wireline CLI
-RUN npm i -g @wirelineio/cli
-
 # Copy outer function handler
 COPY bootstrap.sh ./
 
 # chmod for tmp is for a buildkit issue (@alexellis)
 RUN chown app:app -R /home/app \
     && chmod 777 /tmp
+
+# Required to avoid EACCES errors, cf. 
+# https://stackoverflow.com/questions/44633419/no-access-permission-error-with-npm-global-install-on-docker-image
+RUN npm -g config set user root
+
+# Install the Wireline CLI
+RUN apk --no-cache add curl file openssl coreutils git python build-base && \
+    npm i -g @wirelineio/cli && \
+    apk del git python build-base && \
+    rm -rf /var/cache/apk/*
 
 USER app
 
