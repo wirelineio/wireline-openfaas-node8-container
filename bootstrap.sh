@@ -61,5 +61,8 @@ cd /home/app
 
 cleanup
 
+# At the current time, claim headers can be quite large.
+export NODE_OPTIONS="--max-http-header-size ${NODE_MAX_HEADER_SIZE:-153600} $NODE_OPTIONS"
+
 echo "Starting OpenFaaS watchdog..."
 fwatchdog
