@@ -30,6 +30,7 @@ RUN npm -g config set user root
 # Install the Wireline CLI
 RUN apk --no-cache add curl file openssl coreutils git python build-base && \
     npm i -g @wirelineio/cli && \
+    npm i -g wrtc && \
     apk del git python build-base && \
     rm -rf /var/cache/apk/*
 
