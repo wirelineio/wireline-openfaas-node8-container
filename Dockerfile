@@ -28,11 +28,18 @@ RUN chown app:app -R /home/app \
 RUN npm -g config set user root
 
 # Install the Wireline CLI
-RUN apk --no-cache add curl file openssl coreutils git python build-base && \
-    npm i -g @wirelineio/cli && \
+RUN apk --no-cache add curl file openssl coreutils git python build-base cairo-dev jpeg-dev pango-dev
+
+RUN npm i -g request && \
+    npm i -g request-promise-native && \
+    npm i -g domexception && \
     npm i -g wrtc && \
+    npm i -g @wirelineio/cli && \
     apk del git python build-base && \
     rm -rf /var/cache/apk/*
+
+RUN [ ! -d /data ] && mkdir /data
+RUN chown app:app -R /data
 
 USER app
 
