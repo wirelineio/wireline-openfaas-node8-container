@@ -1,4 +1,4 @@
-FROM node:10.15-alpine
+FROM node:11.11-alpine
 
 
 RUN addgroup -S app && adduser -S -g app app
@@ -40,6 +40,8 @@ RUN npm i -g request && \
 
 RUN [ ! -d /data ] && mkdir /data
 RUN chown app:app -R /data
+
+RUN ln -s /data
 
 USER app
 
